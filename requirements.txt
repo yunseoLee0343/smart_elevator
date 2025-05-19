@@ -1,0 +1,6 @@
+opencv-python
+picamera2
+Adafruit_DHT
+RPi.GPIO
+SpeechRecognition
+smbus2
