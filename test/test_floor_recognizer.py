@@ -1,4 +1,4 @@
-from floor_recognizer import recognize_floor
+from core.floor_recognizer import recognize_floor
 
 if __name__ == "__main__":
     print("🎤 층수 음성 인식 테스트")

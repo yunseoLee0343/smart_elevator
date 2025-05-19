@@ -1,4 +1,4 @@
-from fire_detector import detect_fire, init_fire_sensor
+from core.fire_detector import detect_fire, init_fire_sensor
 import time
 
 if __name__ == "__main__":
