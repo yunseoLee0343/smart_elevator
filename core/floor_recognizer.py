@@ -2,8 +2,9 @@ from pocketsphinx import LiveSpeech, get_model_path
 from core.lcd_display import *
 
 def recognize_floor():
-    lcd_init()
-    lcd_write_string("Recognizing floor...", 0x80)
+    # lcd_init()
+    # lcd_write_string("Recognizing floor...", 0x80)
+    print("Recognizing floor...")
 
     model_path = get_model_path()
 
@@ -34,13 +35,15 @@ def recognize_floor():
                     break
 
         if recognized_floor:
-            lcd_write_string("Floor: " + recognized_floor, 0x80)
+            # lcd_write_string("Floor: " + recognized_floor, 0x80)
+            print("Floor: " + recognized_floor)
             return recognized_floor
         else:
-            lcd_write_string("Recognition failed", 0x80)
+            # lcd_write_string("Recognition failed", 0x80)
+            print("Recognition failed")
             return None
 
     except Exception as e:
-        lcd_write_string("Error occurred", 0x80)
+        # lcd_write_string("Error occurred", 0x80)
         print(f"[ERROR] Exception: {e}")
         return None

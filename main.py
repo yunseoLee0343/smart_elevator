@@ -1,16 +1,18 @@
-from core.person_detector import detect_person
-from core.fire_detector import detect_fire, init_fire_sensor
-from core.floor_recognizer import recognize_floor
-from core.lcd_display import lcd_write_string, LCD_LINE_1
+from core.person_detector import *
+from core.fire_detector import *
+from core.floor_recognizer import *
+from core.lcd_display import *
 import RPi.GPIO as GPIO
 
 if __name__ == "__main__":
-    init_fire_sensor()
+    dht_sensor = init_dht_sensor()
+    mq2_channel = init_adc()
+
     try:
         while True:
             if detect_person():
                 print("[INFO] Person detected.")
-                fire, msg = detect_fire()
+                fire, msg = detect_fire(dht_sensor, mq2_channel)
                 print(msg)
                 if fire:
                     lcd_write_string("Fire detected!", LCD_LINE_1)
