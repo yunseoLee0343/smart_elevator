@@ -10,7 +10,7 @@ if __name__ == "__main__":
             print(message)
             time.sleep(2)
     except KeyboardInterrupt:
-        print("프로그램 종료")
+        print("Program Terminated.")
     finally:
         dht_sensor.exit()
         cleanup()

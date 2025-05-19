@@ -7,11 +7,11 @@ MQ2_PIN = 17
 TEMP_THRESHOLD = 10.0
 GAS_DETECTED = GPIO.LOW
 
-# DHT22 센서 초기화
+# Initialize DHT22 sensor
 def init_dht_sensor(pin=board.D4):
     return adafruit_dht.DHT22(pin)
 
-# MQ2 센서 GPIO 초기화
+# Initialize MQ2 sensor GPIO
 def init_gas_sensor(pin=MQ2_PIN):
     GPIO.setmode(GPIO.BCM)
     GPIO.setup(pin, GPIO.IN)
@@ -23,18 +23,18 @@ def detect_fire(dht_sensor, gas_pin=MQ2_PIN):
         gas_status = GPIO.input(gas_pin)
 
         if temperature is not None and temperature > TEMP_THRESHOLD and gas_status == GAS_DETECTED:
-            msg = f"🔥 화재 감지됨! 온도: {temperature:.1f}°C, 가스 감지됨"
+            msg = f"🔥 Fire detected! Temperature: {temperature:.1f}°C, Gas detected"
             return True, msg
         else:
-            gas_msg = '감지됨' if gas_status == GAS_DETECTED else '정상'
-            msg = f"정상. 온도: {temperature:.1f}°C, 가스 상태: {gas_msg}"
+            gas_msg = 'Detected' if gas_status == GAS_DETECTED else 'Normal'
+            msg = f"Normal. Temperature: {temperature:.1f}°C, Gas status: {gas_msg}"
             return False, msg
 
     except RuntimeError as e:
-        # 센서 읽기 실패 시 가끔 발생하는 예외, 무시하고 재시도 권장
-        return False, f"[WARN] 센서 읽기 오류: {e}"
+        # Occasional read errors, ignore and retry recommended
+        return False, f"[WARN] Sensor read error: {e}"
     except Exception as e:
-        return False, f"[ERROR] 센서 오류: {e}"
+        return False, f"[ERROR] Sensor error: {e}"
 
 def cleanup():
     GPIO.cleanup()

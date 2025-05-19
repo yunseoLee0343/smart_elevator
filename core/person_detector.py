@@ -15,7 +15,7 @@ def detect_person():
         boxes, _ = hog.detectMultiScale(gray, winStride=(8, 8))
         return len(boxes) > 0
     except Exception as e:
-        print(f"[ERROR] 사람 인식 실패: {e}")
+        print(f"[ERROR] Person detection failed: {e}")
         return False
     finally:
         picam2.stop()

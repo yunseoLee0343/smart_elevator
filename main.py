@@ -9,15 +9,15 @@ if __name__ == "__main__":
     try:
         while True:
             if detect_person():
-                print("[INFO] 사람 감지됨.")
+                print("[INFO] Person detected.")
                 fire, msg = detect_fire()
                 print(msg)
                 if fire:
-                    lcd_write_string("화재 감지됨!", LCD_LINE_1)
+                    lcd_write_string("Fire detected!", LCD_LINE_1)
                     break
                 else:
                     recognize_floor()
     except KeyboardInterrupt:
-        print("종료됨.")
+        print("Program terminated.")
     finally:
         GPIO.cleanup()
