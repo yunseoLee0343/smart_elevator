@@ -14,7 +14,8 @@ def recognize_floor():
             print("🎤 말하세요 (예: 3층)")
             audio = recognizer.listen(source, timeout=5)
 
-        text = recognizer.recognize_google(audio, language='ko-KR')
+        # pocketsphinx로 인식 (로컬 음성 인식)
+        text = recognizer.recognize_sphinx(audio, language='ko-KR')  # 한국어 모델 설치 필요
         print(f"[INFO] 인식된 텍스트: {text}")
 
         recognized_floor = None
