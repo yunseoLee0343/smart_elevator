@@ -1,4 +1,4 @@
-from core.floor_recognizer import recognize_floor
+from core.floor_recognizer import *
 
 if __name__ == "__main__":
     print("Floor voice recognition test")

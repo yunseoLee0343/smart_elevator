@@ -1,4 +1,4 @@
-from core.lcd_display import lcd_init, lcd_write_string
+from core.lcd_display import *
 import time
 
 if __name__ == "__main__":

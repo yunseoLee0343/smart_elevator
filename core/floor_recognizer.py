@@ -1,5 +1,5 @@
 import speech_recognition as sr
-from lcd_display import lcd_init, lcd_write_string
+from lcd_display import *
 
 recognizer = sr.Recognizer()
 mic = sr.Microphone()

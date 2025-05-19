@@ -1,4 +1,4 @@
-from core.fire_detector import detect_fire, init_gas_sensor, init_dht_sensor, cleanup
+from core.fire_detector import *
 import time
 
 if __name__ == "__main__":
