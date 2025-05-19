@@ -1,7 +1,7 @@
-from person_detector import detect_person
-from fire_detector import detect_fire, init_fire_sensor
-from floor_recognizer import recognize_floor
-from lcd_display import lcd_write_string, LCD_LINE_1
+from core.person_detector import detect_person
+from core.fire_detector import detect_fire, init_fire_sensor
+from core.floor_recognizer import recognize_floor
+from core.lcd_display import lcd_write_string, LCD_LINE_1
 import RPi.GPIO as GPIO
 
 if __name__ == "__main__":
