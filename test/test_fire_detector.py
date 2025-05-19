@@ -2,15 +2,15 @@ from core.fire_detector import detect_fire, init_gas_sensor, init_dht_sensor, cl
 import time
 
 if __name__ == "__main__":
-    init_gas_sensor()
     dht_sensor = init_dht_sensor()
+    mq2_channel = init_adc()
+
     try:
         while True:
-            fire, message = detect_fire(dht_sensor)
-            print(message)
+            fire, msg = detect_fire(dht_sensor, mq2_channel)
+            print(msg)
             time.sleep(2)
     except KeyboardInterrupt:
-        print("Program Terminated.")
+        print("Exiting...")
     finally:
-        dht_sensor.exit()
         cleanup()

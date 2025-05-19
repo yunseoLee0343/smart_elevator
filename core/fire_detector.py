@@ -1,37 +1,43 @@
 import board
 import adafruit_dht
 import RPi.GPIO as GPIO
-import time
+import busio
+import digitalio
+import adafruit_mcp3xxx.mcp3008 as MCP
+from adafruit_mcp3xxx.analog_in import AnalogIn
 
-MQ2_PIN = 17
 TEMP_THRESHOLD = 10.0
-GAS_DETECTED = GPIO.LOW
 
 # Initialize DHT22 sensor
 def init_dht_sensor(pin=board.D4):
     return adafruit_dht.DHT22(pin)
 
-# Initialize MQ2 sensor GPIO
-def init_gas_sensor(pin=MQ2_PIN):
-    GPIO.setmode(GPIO.BCM)
-    GPIO.setup(pin, GPIO.IN)
+# Initialize MCP3008 ADC to read analog MQ2 sensor value on channel 0 (A0)
+def init_adc():
+    spi = busio.SPI(clock=board.SCK, MISO=board.MISO, MOSI=board.MOSI)
+    cs = digitalio.DigitalInOut(board.D5)  # Chip select pin (can be changed)
+    mcp = MCP.MCP3008(spi, cs)
+    chan = AnalogIn(mcp, MCP.P0)  # Channel 0 = A0
+    return chan
 
-def detect_fire(dht_sensor, gas_pin=MQ2_PIN):
+def detect_fire(dht_sensor, mq2_channel):
     try:
         temperature = dht_sensor.temperature
         humidity = dht_sensor.humidity
-        gas_status = GPIO.input(gas_pin)
+        gas_level = mq2_channel.value  # 16-bit ADC value (0~65535)
+        gas_voltage = mq2_channel.voltage  # Voltage corresponding to gas level
 
-        if temperature is not None and temperature > TEMP_THRESHOLD and gas_status == GAS_DETECTED:
-            msg = f"Fire detected! Temperature: {temperature:.1f}°C, Gas detected"
+        # 임계값은 경험적으로 정해야 합니다. 예: 30000 (ADC raw value)
+        GAS_THRESHOLD = 30000
+
+        if temperature is not None and temperature > TEMP_THRESHOLD and gas_level > GAS_THRESHOLD:
+            msg = f"🔥 Fire detected! Temp: {temperature:.1f}°C, Gas level: {gas_level} (Voltage: {gas_voltage:.2f}V)"
             return True, msg
         else:
-            gas_msg = 'Detected' if gas_status == GAS_DETECTED else 'Normal'
-            msg = f"Normal. Temperature: {temperature:.1f}°C, Gas status: {gas_msg}"
+            msg = f"Normal. Temp: {temperature:.1f}°C, Gas level: {gas_level} (Voltage: {gas_voltage:.2f}V)"
             return False, msg
 
     except RuntimeError as e:
-        # Occasional read errors, ignore and retry recommended
         return False, f"[WARN] Sensor read error: {e}"
     except Exception as e:
         return False, f"[ERROR] Sensor error: {e}"
