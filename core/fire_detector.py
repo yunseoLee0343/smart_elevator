@@ -23,7 +23,7 @@ def detect_fire(dht_sensor, gas_pin=MQ2_PIN):
         gas_status = GPIO.input(gas_pin)
 
         if temperature is not None and temperature > TEMP_THRESHOLD and gas_status == GAS_DETECTED:
-            msg = f"🔥 Fire detected! Temperature: {temperature:.1f}°C, Gas detected"
+            msg = f"Fire detected! Temperature: {temperature:.1f}°C, Gas detected"
             return True, msg
         else:
             gas_msg = 'Detected' if gas_status == GAS_DETECTED else 'Normal'

@@ -11,7 +11,7 @@ def recognize_floor():
     try:
         with mic as source:
             recognizer.adjust_for_ambient_noise(source)
-            print("🎤 Please speak (e.g., 3rd floor)")
+            print("Please speak (e.g., 3rd floor)")
             audio = recognizer.listen(source, timeout=5)
 
         # Recognize with pocketsphinx (offline speech recognition)
