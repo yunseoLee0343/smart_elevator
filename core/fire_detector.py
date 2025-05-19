@@ -31,7 +31,7 @@ def detect_fire(dht_sensor, mq2_channel):
         GAS_THRESHOLD = 30000
 
         if temperature is not None and temperature > TEMP_THRESHOLD and gas_level > GAS_THRESHOLD:
-            msg = f"🔥 Fire detected! Temp: {temperature:.1f}°C, Gas level: {gas_level} (Voltage: {gas_voltage:.2f}V)"
+            msg = f"Fire detected! Temp: {temperature:.1f}°C, Gas level: {gas_level} (Voltage: {gas_voltage:.2f}V)"
             return True, msg
         else:
             msg = f"Normal. Temp: {temperature:.1f}°C, Gas level: {gas_level} (Voltage: {gas_voltage:.2f}V)"
