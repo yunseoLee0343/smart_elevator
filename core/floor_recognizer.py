@@ -1,6 +1,6 @@
 import pocketsphinx
 from pocketsphinx import LiveSpeech, get_model_path
-from lcd_display import lcd_init, lcd_write_string
+from core.lcd_display import lcd_init, lcd_write_string
 
 def recognize_floor():
     lcd_init()
