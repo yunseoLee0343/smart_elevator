@@ -1,10 +1,16 @@
-from core.fire_detector import detect_fire, init_fire_sensor
+from core.fire_detector import detect_fire, init_gas_sensor, init_dht_sensor, cleanup
 import time
 
 if __name__ == "__main__":
-    print("🔥 화재 감지 테스트 시작")
-    init_fire_sensor()
-    for i in range(5):
-        fire, msg = detect_fire()
-        print(f"[{i+1}] 감지 결과: {msg}")
-        time.sleep(2)
+    init_gas_sensor()
+    dht_sensor = init_dht_sensor()
+    try:
+        while True:
+            fire, message = detect_fire(dht_sensor)
+            print(message)
+            time.sleep(2)
+    except KeyboardInterrupt:
+        print("프로그램 종료")
+    finally:
+        dht_sensor.exit()
+        cleanup()
