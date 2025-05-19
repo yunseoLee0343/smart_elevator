@@ -1,6 +1,5 @@
-import pocketsphinx
 from pocketsphinx import LiveSpeech, get_model_path
-from core.lcd_display import lcd_init, lcd_write_string
+from core.lcd_display import *
 
 def recognize_floor():
     lcd_init()
@@ -10,9 +9,9 @@ def recognize_floor():
 
     speech = LiveSpeech(
         sampling_rate=16000,  # optional
-        hmm=get_model_path('en-us'),
-        lm=get_model_path('en-us.lm.bin'),
-        dic=get_model_path('cmudict-en-us.dict')
+        hmm=model_path + '/en-us',
+        lm=model_path + '/en-us.lm.bin',
+        dic=model_path + '/cmudict-en-us.dict'
     )
 
     recognized_floor = None
